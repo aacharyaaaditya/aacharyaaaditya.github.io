@@ -1,5 +1,9 @@
-Yay. I created a professional (personal) website all by myself. Most of the codes, where required, are created with the help of AI.
+# Aditya Acharya — Jekyll Portfolio + Blog
 
-The most exciting part is that - I created it without any costs involved. FREEEEEE! Yay.
+Light theme personal site for GitHub Pages.
 
-Well, nothing to add here at the moment. This is supposed to be just a readme file for my repository/page/website - aacharyaaaditya.github.io
+## Deployment
+1. Create a GitHub repo named `aditya.github.io`.
+2. Upload all these files.
+3. In Settings → Pages, deploy from branch `main`, folder `/ (root)`.
+4. Visit `https://aacharyaaaditya.github.io`.
