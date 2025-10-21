@@ -1,8 +1,4 @@
 
----
-layout: page
-title: "Home"
----
 # Hi, I'm Aditya Acharya 👋
 
 Welcome to my personal website.  
