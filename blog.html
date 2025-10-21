@@ -1,0 +1,47 @@
+---
+layout: default
+title: "Blog"
+---
+
+<section class="container mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-6 text-center">My Blog Posts (English)</h1>
+
+  <ul id="blog-feed" class="space-y-4 text-lg text-gray-800"></ul>
+
+  <p id="feed-error" class="text-center text-gray-500 hidden">
+    Could not load posts. Please check back later.
+  </p>
+</section>
+
+<script>
+  const feedURL = "https://aacharyaaaditya.wordpress.com/category/english/feed/";
+  fetch(feedURL)
+    .then(res => res.text())
+    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    .then(data => {
+      const items = data.querySelectorAll("item");
+      if (!items.length) {
+        document.querySelector("#feed-error").classList.remove("hidden");
+        return;
+      }
+      let html = "";
+      items.forEach(el => {
+        const title = el.querySelector("title").textContent;
+        const link = el.querySelector("link").textContent;
+        const date = new Date(el.querySelector("pubDate").textContent);
+        html += `
+          <li class="border-b pb-2">
+            <a href="${link}" target="_blank" class="text-blue-600 hover:underline font-medium">
+              ${title}
+            </a>
+            <div class="text-sm text-gray-500">${date.toDateString()}</div>
+          </li>
+        `;
+      });
+      document.querySelector("#blog-feed").innerHTML = html;
+    })
+    .catch(err => {
+      console.error("Feed fetch error:", err);
+      document.querySelector("#feed-error").classList.remove("hidden");
+    });
+</script>
