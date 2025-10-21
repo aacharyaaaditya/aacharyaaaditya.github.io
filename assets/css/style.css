@@ -1,0 +1,44 @@
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #fafafa;
+  color: #222;
+  margin: 0; padding: 0;
+}
+header, footer {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 1em 2em;
+  text-align: center;
+}
+nav a {
+  margin: 0 1em;
+  text-decoration: none;
+  color: #0077cc;
+}
+main.content {
+  padding: 2em;
+  max-width: 800px;
+  margin: auto;
+}
+.post, .page {
+  margin-bottom: 2em;
+  padding: 1.5em;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.loader {
+  text-align: center;
+  padding: 2em;
+}
+.post-card {
+  margin: 1em 0;
+  padding: 1em;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.post-card h3 {
+  margin: 0;
+}
