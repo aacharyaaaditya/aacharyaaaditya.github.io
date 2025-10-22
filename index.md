@@ -4,6 +4,7 @@ title: Home
 ---
 
 <section class="hero">
+   <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Photo of {{ site.title }}" class="profile-pic">
   <h1>Hey, I'm {{ site.title }}</h1>
   <p class="lead">I design and build clean, modern experiences for the web.</p>
   <a href="#work">↓ See My Work</a>
