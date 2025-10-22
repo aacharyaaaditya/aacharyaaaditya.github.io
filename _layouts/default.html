@@ -10,6 +10,21 @@
       --bg: #0f1724; --card: #0b1220; --text: #e6eef6; --accent: #6ee7b7;
       --muted: #94a3b8; --maxw: 960px;
     }
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+  toggle.addEventListener('click', () => {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  });
+</script>
+    
+    
     body {
       margin: 0; font-family: Inter, system-ui, sans-serif;
       background: var(--bg); color: var(--text);
