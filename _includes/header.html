@@ -1,10 +1,18 @@
-
 <header class="site-header">
-  <h2><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h2>
-  <nav>
-    <a href="{{ '/' | relative_url }}">Home</a>
-    <a href="{{ '/about' | relative_url }}">About</a>
-    <a href="{{ '/blog' | relative_url }}">Blog</a>
-    <a href="{{ '/from-wordpress' | relative_url }}">From WordPress</a>
-  </nav>
+  <div class="nav-wrapper">
+    <nav class="navbar container">
+      <div class="logo">
+        <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="Logo" />
+      </div>
+      <ul class="nav-links">
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ '/articles' | relative_url }}">Blog Posts</a></li>
+        <li><a href="{{ '/about' | relative_url }}">About</a></li>
+        <li><a href="{{ '/contact' | relative_url }}">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle theme">
+        🌙
+      </button>
+    </nav>
+  </div>
 </header>
