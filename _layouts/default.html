@@ -28,6 +28,17 @@
   <header>
     <h2>{{ site.title }}</h2>
     <p>{{ site.description }}</p>
+
+    #Navigation start
+    <nav>
+      <ul>
+        {% for item in site.nav %}
+          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    #Nav end
   </header>
 
   <main>
