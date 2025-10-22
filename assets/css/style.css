@@ -42,3 +42,24 @@ main.content {
 .post-card h3 {
   margin: 0;
 }
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+/* =====================
+highlighting active menu 
+=======================*/
+
+nav li a {
+  text-decoration: none;
+  color: #333;
+}
+
+nav li.active a {
+  font-weight: bold;
+  color: #007acc; /* highlight color */
+  border-bottom: 2px solid #007acc;
+}
