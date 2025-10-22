@@ -7,13 +7,18 @@ url: "https://aacharyaaaditya.github.io"
 #Build settings
 theme:
 
-# Navigation links
-nav:
--title: "Home"
- url: /
--title: "About"
- url: /about/
--title: "Blog"
- url: /blog/
--title: contact
- url: /contact/
+# Build settings
+markdown: kramdown
+theme: minima # default Jekyll theme, change if you want
+plugins: [] # add plugins if needed
+
+# Author info (custom variable example)
+author:
+  name: Your Name
+  email: your.email@example.com
+
+# Exclude from build
+exclude:
+  - README.md
+  - node_modules
+  
