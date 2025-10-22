@@ -1,4 +1,23 @@
-
 <footer class="site-footer">
-  <p>© {{ site.time | date: "%Y" }} {{ site.title }} — All rights reserved.</p>
+  <div class="container footer-content">
+    <div class="footer-left">
+      <p>© {{ "now" | date: "%Y" }} {{ site.title }}</p>
+    </div>
+
+    <div class="footer-center">
+      <h3 class="footer-title">{{ site.title }}</h3>
+    </div>
+
+    <div class="footer-right">
+      <a href="https://github.com/aacharyaaaditya" aria-label="GitHub" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://youtube.com/@AacharyaAaditya" aria-label="Youtube" target="_blank">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://twitter.com/aacharyaaaditya" aria-label="Twitter" target="_blank">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </div>
+  </div>
 </footer>
