@@ -6,3 +6,14 @@ url: "https://aacharyaaaditya.github.io"
 
 #Build settings
 theme:
+
+# Navigation links
+nav:
+-title: "Home"
+ url: /
+-title: "About"
+ url: /about/
+-title: "Blog"
+ url: /blog/
+-title: contact
+ url: /contact/
