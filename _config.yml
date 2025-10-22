@@ -2,5 +2,7 @@
 title: "Aditya Acharya"
 description: "My personal website"
 baseurl: ""
-url: ""
-theme: minima
+url: "https://aacharyaaaditya.github.io"
+
+#Build settings
+theme:
