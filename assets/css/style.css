@@ -134,3 +134,67 @@ nav li.active a {
   color: #007acc; /* highlight color */
   border-bottom: 2px solid #007acc;
 }
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  border-top: 2px solid var(--border);
+  margin-top: 4rem;
+  padding: 1.5rem 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-title {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.footer-right a {
+  color: var(--footer-text);
+  margin-left: 0.75rem;
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: var(--accent, #007bff);
+}
+
+/* Theme colors */
+:root {
+  --footer-bg: #f8fafc;
+  --footer-text: #1e293b;
+}
+
+[data-theme="dark"] {
+  --footer-bg: #1e293b;
+  --footer-text: #f1f5f9;
+}
+
+/* ---------- FOOTER END ------- */
