@@ -10,30 +10,34 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
 
 <style>
   .postcard {
-    border: 1px solid #ddd;
-    padding: 16px;
+    border: 1px solid #e0e0e0; /* lighter border for floating effect */
+    padding: 20px; /* slightly increased padding */
     margin-bottom: 24px;
-    border-radius: 4px;
-    background: #fff;
+    border-radius: 8px; /* slightly more rounded corners */
+    background: #f9f9f9; /* light background */
     font-family: sans-serif;
     display: flex;
     justify-content: space-between;
     gap: 16px;
     align-items: flex-start;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* more pronounced shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .postcard:hover { transform: translateY(-2px); }
+  .postcard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* deeper shadow on hover */
+  }
+
   .postcard-content { flex: 1; }
 
   /* Thumbnail styles */
   .postcard img {
     width: 200px;
-    height: 180px; /* increased from 140px */
+    height: 180px;
     object-fit: cover;
     border: 1px solid #aaa;
-    border-radius: 2px;
+    border-radius: 4px;
     flex-shrink: 0;
     transition: transform 0.3s ease;
     display: block;
@@ -64,11 +68,16 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
     color: #333;
     text-decoration: none;
     text-transform: capitalize;
-    border-radius: 2px;
+    border-radius: 4px;
     background-color: #fff;
     display: inline-block;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
+  }
+
+  .category-tag:hover {
+    transform: scale(1.05);
+    border-color: #1e3a8a;
   }
 
   .wp-heading { font-family: sans-serif; font-size: 22px; color: #1e3a8a; margin: 32px 0 24px; text-align: left; display: inline-block; border-bottom: none; padding-bottom: 3px; line-height: 1.3; }
