@@ -21,12 +21,12 @@ title: Home
     <div class="caption"> A night by the Eiffel tower </div>
   </div>
   <div class="slide fade">
-    <img src="/assets/images/germany_somewhere.jpg" alt="Photo 3">
+    <img src="/assets/images/germany_somewhere.JPG" alt="Photo 3">
     <div class="caption"> जर्मनीतिर कतै  ... </div>
   </div>
 
   <div class="slide fade">
-    <img src="/assets/images/finland_helsinki_summer.jpg" alt="Photo 3">
+    <img src="/assets/images/finland_helsinki_summer.JPG" alt="Photo 3">
     <div class="caption"> Finnish summer, Helsinki </div>
   </div>
 </div>
