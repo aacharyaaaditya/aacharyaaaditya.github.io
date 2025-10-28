@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Transitory times - Aditya Acharya
 ---
 
 <!-- Slideshow -->
@@ -22,12 +22,15 @@ title: Home
   </div>
   <div class="slide fade">
     <img src="/assets/images/germany_somewhere.JPG" alt="Photo 3">
-    <div class="caption"> जर्मनीतिर कतै  ... </div>
+    <div class="caption"> Somewhere around the Black Forest, Germany </div>
   </div>
-
+  <div class="slide fade">
+    <img src="/assets/images/austria_alps.jpg" alt="Photo 3">
+    <div class="caption"> आल्प्स् हिमाल, अपर अस्ट्रियातिर ...  </div>
+  </div>
   <div class="slide fade">
     <img src="/assets/images/finland_helsinki_summer.JPG" alt="Photo 3">
-    <div class="caption"> Finnish summer, Helsinki </div>
+    <div class="caption"> A Finnish summer, in Helsinki </div>
   </div>
 </div>
 
