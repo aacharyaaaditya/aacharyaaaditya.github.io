@@ -1,7 +1,7 @@
 /* ===== Body and Background ===== */
 body {
   font-family: Arial, sans-serif;
-  max-width: 1500px;
+  max-width: 1400px;
   width: 95%;
   margin: 0 auto;
   padding: 1rem;
@@ -16,7 +16,7 @@ body {
 .site-info {
   display: block;                 /* block element takes full width by default */
 
-  max-width: 1500px;               /* optional: match your page content width */
+  max-width: 1400px;               /* optional: match your page content width */
   width: 100%;                    /* ensures it spans entire page width */
   margin: 0 auto;                 /* centers the container if max-width is set */
   padding: 1rem 2rem;             /* space inside the background */
@@ -107,7 +107,7 @@ h2 {
 
 /* Main content container with vertical lines */
 .content-container {
-  max-width: 1500px;           /* match header/nav/footer width */
+  max-width: 1400px;           /* match header/nav/footer width */
   margin: 0 auto;              /* center it horizontally */
   padding: 2rem;               /* spacing inside */
   margin-top: 0;               /* removes default top spacing */
@@ -214,7 +214,7 @@ footer {
   border-top: 1px solid red;
   background-color: #007acc;       /* Strong blue background */
   color: #f0f4f8;                  /* Light text color */
-  max-width: 1500px;
+  max-width: 1400px;
   width: 95%;
   text-align: center;
   padding: 1.5rem 2rem;            /* slightly more padding for breathing space */
