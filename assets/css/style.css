@@ -1,7 +1,7 @@
 /* ===== Body and Background ===== */
 body {
   font-family: Arial, sans-serif;
-  font-size: 18px;           /* 🔹 Increased base text size (was ~16px default) */
+  font-size: 20px;           /* 🔹 Increased base text size (was ~16px default) */
   max-width: 1400px;
   margin: 2rem auto;
   padding: 1.5rem;
