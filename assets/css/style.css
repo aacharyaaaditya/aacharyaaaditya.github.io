@@ -12,6 +12,7 @@ body {
   border-radius: 10px;
 }
 
+
 /* ===== Header Styles ===== */
 /* -----------------------------
    Container for site title & description
@@ -36,7 +37,7 @@ body {
 
 .site-title {
   font-family: 'Caveat', cursive;
-  font-size: 2.2rem;   /* adjust as needed */
+  font-size: 3rem;   /* adjust as needed */
   font-weight: 700;  /* optional: lighter for a handwritten look */
   color: #FFFFFF;
   margin: 0;
@@ -49,7 +50,7 @@ body {
 .site-description {
   margin: 0;               /* remove default margin around h4 */
   color: #f0f4f8;          /* slightly lighter color for subtitle */
-  font-size: 1rem;         /* standard readable size */
+  font-size: 1.5rem;         /* standard readable size */
 }
 
 /* ===== Navigation Styles ===== */
