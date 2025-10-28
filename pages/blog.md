@@ -52,7 +52,7 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
   .meta { font-size: 13px; color: #666; margin-bottom: 10px; }
   .meta a { color: #1e3a8a; text-decoration: none; }
 
-  .summary { font-size: 14px; margin-bottom: 12px; color: #333; }
+  .summary { font-size: 17px; margin-bottom: 12px; color: #333; }
 
   .categories-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .category-label { font-size: 13px; color: #555; font-style: italic; white-space: nowrap; }
@@ -71,7 +71,14 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
     cursor: pointer;
   }
 
-  .wp-heading { font-family: sans-serif; font-size: 18px; color: #1e3a8a; margin: 32px 0 24px; text-align: left; display: inline-block; border-bottom: none; padding-bottom: 3px; line-height: 1.3; }
+  .wp-heading { font-family: sans-serif; font-size: 22px; color: #1e3a8a; margin: 32px 0 24px; text-align: left; display: inline-block; border-bottom: none; padding-bottom: 3px; line-height: 1.3; }
+
+  #wp-latest-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
 </style>
 
 <div id="wp-latest-posts"></div>
@@ -101,7 +108,7 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
         return;
       }
 
-      data.items.slice(0, 5).forEach(item => {
+      data.items.slice(0, 6).forEach(item => {
         const postDiv = document.createElement('div');
         postDiv.className = 'postcard';
 
