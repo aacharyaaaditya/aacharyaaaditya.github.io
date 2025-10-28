@@ -2,7 +2,7 @@
 body {
   font-family: Arial, sans-serif;
   font-size: 20px;           /* 🔹 Increased base text size (was ~16px default) */
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 2rem auto;
   padding: 1.5rem;
   line-height: 1.7;          /* Slightly more breathing space */
@@ -20,7 +20,7 @@ body {
 .site-info {
   display: block;                 /* block element takes full width by default */
 
-  max-width: 1000px;               /* optional: match your page content width */
+  max-width: 1100px;               /* optional: match your page content width */
   width: 100%;                    /* ensures it spans entire page width */
   margin: 0 auto;                 /* centers the container if max-width is set */
   padding: 1rem 2rem;             /* space inside the background */
@@ -111,7 +111,7 @@ h2 {
 
 /* Main content container with vertical lines */
 .content-container {
-  max-width: 1000px;           /* match header/nav/footer width */
+  max-width: 1100px;           /* match header/nav/footer width */
   margin: 0 auto;              /* center it horizontally */
   padding: 2rem;               /* spacing inside */
   margin-top: 0;               /* removes default top spacing */
@@ -218,7 +218,7 @@ footer {
   border-top: 1px solid red;
   background-color: #007acc;       /* Strong blue background */
   color: #f0f4f8;                  /* Light text color */
-  max-width: 1000px;
+  max-width: 1100px;
   width: 95%;
   text-align: center;
   padding: 1.5rem 2rem;            /* slightly more padding for breathing space */
