@@ -1,7 +1,8 @@
 /* ===== Body and Background ===== */
 body {
   font-family: Arial, sans-serif;
-  max-width: 900px;
+  max-width: 1500px;
+  width: 95%;
   margin: 0 auto;
   padding: 1rem;
   line-height: 1.6;
@@ -14,8 +15,9 @@ body {
 ----------------------------- */
 .site-info {
   display: block;                 /* block element takes full width by default */
+
+  max-width: 1500px;               /* optional: match your page content width */
   width: 100%;                    /* ensures it spans entire page width */
-  max-width: 960px;               /* optional: match your page content width */
   margin: 0 auto;                 /* centers the container if max-width is set */
   padding: 1rem 2rem;             /* space inside the background */
   background-color: #007acc;      /* solid blue background */
@@ -105,7 +107,7 @@ h2 {
 
 /* Main content container with vertical lines */
 .content-container {
-  max-width: 1200px;           /* match header/nav/footer width */
+  max-width: 1500px;           /* match header/nav/footer width */
   margin: 0 auto;              /* center it horizontally */
   padding: 2rem;               /* spacing inside */
   margin-top: 0;               /* removes default top spacing */
@@ -148,7 +150,7 @@ h2 {
 /* Slideshow Images Style */
 .slide img {
   width: 100%;                      /* image stretches full width of container */
-  height: 400px;                     /* fixed height for all slides */
+  height: 500px;                     /* fixed height for all slides */
   object-fit: cover;                 /* crop/scale image to fill container without distortion */
   display: block;                    /* remove extra spacing below image */
   border: 4px solid #fff;            /* thick white frame around the image */
@@ -212,6 +214,8 @@ footer {
   border-top: 1px solid red;
   background-color: #007acc;       /* Strong blue background */
   color: #f0f4f8;                  /* Light text color */
+  max-width: 1500px;
+  width: 95%;
   text-align: center;
   padding: 1.5rem 2rem;            /* slightly more padding for breathing space */
   font-size: 0.95rem;
