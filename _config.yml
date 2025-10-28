@@ -1,0 +1,21 @@
+
+title: "Aditya Acharya"
+description: "Nature | Environment | Climate Change | Natural Resource Management | Science Communication"
+baseurl: ""
+url: "https://aacharyaaaditya.github.io"
+
+# Build settings
+markdown: kramdown
+theme: # default Jekyll theme, change if you want
+plugins: [] # add plugins if needed
+
+# Author info (custom variable example)
+author:
+  name: Aditya Acharya
+  email: your.email@example.com
+
+# Exclude from build
+exclude:
+  - README.md
+  - node_modules
+  

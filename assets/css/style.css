@@ -1,0 +1,262 @@
+/* ===== Body and Background ===== */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ===== Header Styles ===== */
+/* -----------------------------
+   Container for site title & description
+----------------------------- */
+.site-info {
+  display: block;                 /* block element takes full width by default */
+  width: 100%;                    /* ensures it spans entire page width */
+  max-width: 960px;               /* optional: match your page content width */
+  margin: 0 auto;                 /* centers the container if max-width is set */
+  padding: 1rem 2rem;             /* space inside the background */
+  background-color: #007acc;      /* solid blue background */
+  text-align: center;             /* center the text horizontally */
+  border-radius: 5px 5px 0 0;             /* optional: rounded corners */
+  box-sizing: border-box;         /* ensures padding doesn’t increase total width */
+}
+
+
+/* -----------------------------
+   Site title (h1)
+----------------------------- */
+
+.site-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2.2rem;   /* adjust as needed */
+  font-weight: 700;  /* optional: lighter for a handwritten look */
+  color: #FFFFFF;
+  margin: 0;
+}
+
+
+/* -----------------------------
+   Site description (h4)
+----------------------------- */
+.site-description {
+  margin: 0;               /* remove default margin around h4 */
+  color: #f0f4f8;          /* slightly lighter color for subtitle */
+  font-size: 1rem;         /* standard readable size */
+}
+
+/* ===== Navigation Styles ===== */
+
+/* Navigation bar container */
+nav {
+  background-color: yellow;  /* Light background color */
+  border-top: 1px solid #007acc;   /* Top horizontal line */
+  border-bottom: 1.75px solid red; /* Bottom horizontal line */
+  padding: 0.5rem 0;         /* Vertical padding */
+  margin-bottom: 2rem;       /* Space below nav bar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+nav ul {
+  list-style-type: none;      /* Remove bullets */
+  padding: 0;                 /* Remove default padding */
+  margin: 0;                  /* Remove default margin */
+  display: flex;              /* Arrange children horizontally */
+  justify-content: center;    /* Center the navigation */
+  gap: 20px;                  /* Space between each link */
+}
+
+nav ul li {
+  /* No extra styles needed here for now */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #555;
+  font-weight: bold;
+  padding: 0.5rem 1rem;            /* Bigger clickable area */
+  border-radius: 5px;              /* Rounded corners */
+  transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+nav ul li a:hover {
+  color: #fff;
+  background-color: #007acc;       /* Blue background on hover */
+  box-shadow: 0 4px 10px rgba(0, 122, 204, 0.5); /* Stronger shadow on hover */
+}
+
+/* Active link style */
+nav ul li a.active, nav ul li a[aria-current="page"] {
+  background-color: #005fa3;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 95, 163, 0.6);
+}
+
+
+
+/* ===== Headings ===== */
+h2 {
+  border-bottom: 2px solid #007acc;
+  padding-bottom: 0.25rem;
+}
+
+/* Main content container with vertical lines */
+.content-container {
+  max-width: 1200px;           /* match header/nav/footer width */
+  margin: 0 auto;              /* center it horizontally */
+  padding: 2rem;               /* spacing inside */
+  margin-top: 0;               /* removes default top spacing */
+  padding-top: 0;              /* ensure no padding adds extra space */
+  margin-bottom: 0;   /* removes default top spacing */
+  padding-bottom: 0;  /* ensure no padding adds extra space */
+  border-left: 0.5px solid #DBDBDB;   /* left vertical line */
+  border-right: 0.5px solid #E3E3E3;  /* right vertical line */
+}
+
+@media (max-width: 768px) {
+  .content-container {
+    padding: 1rem;
+    width: 95%;
+  }
+}
+
+/* ===== Homepage images slideshow ===== */
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  width: 100vw;        /* full width of the viewport */
+  max-width: 100%;     /* prevent horizontal overflow */
+  overflow: hidden;
+}
+
+/* Slides */
+.slide {
+  display: none;           /* hidden by default */
+  position: relative;
+}
+
+/* Active slide */
+.slide.fade.active {
+  display: block;          /* show the slide */
+  opacity: 1;              /* fade in */
+}
+
+/* Slideshow Images Style */
+.slide img {
+  width: 100%;                      /* image stretches full width of container */
+  height: 400px;                     /* fixed height for all slides */
+  object-fit: cover;                 /* crop/scale image to fill container without distortion */
+  display: block;                    /* remove extra spacing below image */
+  border: 4px solid #fff;            /* thick white frame around the image */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* subtle shadow for depth */
+  border-radius: 0;                  /* square corners */
+}
+
+/* Caption overlay */
+.slide .caption {
+  position: absolute;                 /* position caption over image */
+  top: 50%;                            /* vertically center */
+  right: 10px;                          /* distance from left edge */
+  transform: translateY(-50%);         /* adjust vertical centering */
+  background: rgba(0,0,0,0.6);         /* semi-transparent dark background */
+  color: #fff;                          /* caption text color */
+  padding: 20px 20px;                   /* spacing inside caption box */
+display: inline-block;           /* make box size fit the text */
+line-height: 1.0; /* tighter spacing */ 
+  font-size: 1.1rem;                     /* readable font size */
+  border-radius: 0;                      /* square corners */
+  opacity: 0;                            /* initially hidden */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* fade + slide effect */
+  white-space: pre-line;    /* prevent automatic line wrapping */
+
+}
+
+/* Thin rectangular box inside the photo */
+.slide::after {
+  content: "";
+  position: absolute;
+  top: 10px;           /* distance from top */
+  left: 10px;          /* distance from left */
+  right: 10px;         /* distance from right */
+  bottom: 10px;        /* distance from bottom */
+  border: 1px solid #fff; /* color of rectangle */
+  pointer-events: none;   /* click passes through */
+  box-sizing: border-box;
+}
+
+/* Show caption when slide is active */
+.slide.fade.active .caption {
+  opacity: 1;                            /* fade in caption */
+  transform: translateY(-50%) translateX(0); /* slide effect from left */
+}
+
+/* Fade animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 2s;
+}
+
+@keyframes fade {
+  from {opacity: 0.4}
+  to {opacity: 1}
+}
+
+/* ===== Footer Styles ===== */
+
+/* Footer container */
+footer {
+  border-top: 1px solid red;
+  background-color: #007acc;       /* Strong blue background */
+  color: #f0f4f8;                  /* Light text color */
+  text-align: center;
+  padding: 1.5rem 2rem;            /* slightly more padding for breathing space */
+  font-size: 0.95rem;
+  margin-top: 3rem;
+  border-radius: 0 0 8px 8px;      /* subtle rounded bottom corners */
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1); /* subtle top shadow for depth */
+}
+
+/* Flex layout for content */
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* left and right aligned */
+  align-items: center;
+  flex-wrap: wrap;               /* stack on smaller screens */
+  gap: 0.5rem;
+}
+
+/* Left text */
+.footer-left {
+  margin: 0;
+}
+
+/* Right side: social icons */
+.footer-right a {
+  color: #f0f4f8;
+  text-decoration: none;
+  margin-left: 1rem;
+  font-size: 1.4rem;             /* icons clearly visible */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Responsive: mobile */
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-right {
+    margin-top: 0.5rem;
+  }
+  .footer-right a {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
