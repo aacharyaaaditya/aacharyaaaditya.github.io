@@ -1,12 +1,15 @@
 /* ===== Body and Background ===== */
 body {
   font-family: Arial, sans-serif;
+  font-size: 18px;           /* 🔹 Increased base text size (was ~16px default) */
   max-width: 1400px;
-  width: 95%;
-  margin: 0 auto;
-  padding: 1rem;
-  line-height: 1.6;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  line-height: 1.7;          /* Slightly more breathing space */
   color: #333;
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 /* ===== Header Styles ===== */
