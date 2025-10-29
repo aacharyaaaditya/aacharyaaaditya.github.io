@@ -1,3 +1,5 @@
+
+
 /* ===== Body and Background ===== */
 body {
   font-family: Arial, sans-serif;
@@ -66,12 +68,14 @@ nav {
 }
 
 nav ul {
+
   list-style-type: none;      /* Remove bullets */
   padding: 0;                 /* Remove default padding */
   margin: 0;                  /* Remove default margin */
   display: flex;              /* Arrange children horizontally */
   justify-content: center;    /* Center the navigation */
-  gap: 20px;                  /* Space between each link */
+  flex-wrap: wrap;            /* 👈 allows wrapping on small screens */
+  gap: 10px;                  /* Space between each link */
 }
 
 nav ul li {
@@ -99,6 +103,18 @@ nav ul li a.active, nav ul li a[aria-current="page"] {
   background-color: #005fa3;
   color: white;
   box-shadow: 0 4px 10px rgba(0, 95, 163, 0.6);
+}
+
+@media (max-width: 600px) {
+  nav ul {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  nav ul li a {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
 }
 
 
@@ -218,8 +234,7 @@ footer {
   border-top: 1px solid red;
   background-color: #007acc;       /* Strong blue background */
   color: #f0f4f8;                  /* Light text color */
-  max-width: 1000px;
-  width: 95%;
+
   text-align: center;
   padding: 1.5rem 2rem;            /* slightly more padding for breathing space */
   font-size: 0.95rem;
