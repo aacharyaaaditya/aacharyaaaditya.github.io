@@ -10,11 +10,11 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
 
 <style>
   .postcard {
-    border: 1px solid #e0e0e0; /* lighter border for floating effect */
+    border: 1px solid #656565; /* lighter border for floating effect */
     padding: 20px; /* slightly increased padding */
     margin-bottom: 24px;
-    border-radius: 8px; /* slightly more rounded corners */
-    background: #f9f9f9; /* light background */
+    border-radius: 0 15px 0 15px; /* slightly more rounded corners */
+    background: #DCDBDA; /* light background */
     font-family: sans-serif;
     display: flex;
     justify-content: space-between;
@@ -33,7 +33,7 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
 
   /* Thumbnail styles */
   .postcard img {
-    width: 200px;
+    width: 250px;
     height: 180px;
     object-fit: cover;
     border: 1px solid #aaa;
@@ -46,29 +46,29 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
   .postcard img:hover { transform: scale(1.05); }
 
   /* Post titles */
-  .postcard-content h4 { margin: 0 0 6px; font-size: 24px; color: #1e3a8a; }
+  .postcard-content h4 { margin: 0 0 6px; font-size: 20px; color: #1e3a8a; }
   .postcard-content h4 a { color: #1e3a8a; text-decoration: none; }
   .postcard-content h4 a:hover { text-decoration: underline; }
 
   /* Divider below title */
   .divider { height: 1px; background: #e53935; margin: 8px 0; }
 
-  .meta { font-size: 16px; color: #666; margin-bottom: 10px; }
+  .meta { font-size: 16px; color: #0D0C0C; margin-bottom: 10px; }
   .meta a { color: #1e3a8a; text-decoration: none; }
 
-  .summary { font-size: 18px; margin-bottom: 12px; color: #333; }
+  .summary { font-size: 16px; margin-bottom: 12px; color: #0D0C0C; }
 
   .categories-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .category-label { font-size: 16px; color: #555; font-style: italic; white-space: nowrap; }
 
   .category-tag {
-    border: 2px solid #444;
+    border: 1px solid #444;
     padding: 3px 8px;
     font-size: 14px;
     color: #333;
     text-decoration: none;
     text-transform: capitalize;
-    border-radius: 4px;
+    border-radius:0 10px 0 10px;
     background-color: #fff;
     display: inline-block;
     transition: border-color 0.3s ease, transform 0.3s ease;
@@ -132,7 +132,7 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
         const summaryText = sentences.slice(0, 3).join(' ').trim() || plainText.split(' ').slice(0, 40).join(' ') + '...';
         const summary = `<div class="summary">${summaryText}</div>`;
 
-        const categoryLabel = `<span class="category-label">More by the author in</span>`;
+        const categoryLabel = `<span class="category-label">Posted in</span>`;
         const categoryLinks = (item.categories || []).slice(0, 2).map(catName => {
           const slug = encodeURIComponent(catName.toLowerCase().replace(/\s+/g, '-'));
           const url = `https://aacharyaaaditya.wordpress.com/category/${slug}/`;
