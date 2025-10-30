@@ -6,6 +6,7 @@ permalink: /articles-blogs/
 
 <h2> Recent articles </h2>
 
+The latest articles written in this website
 
 <style>
   /* Container for all local posts */
