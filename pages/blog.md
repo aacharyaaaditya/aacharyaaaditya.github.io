@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: "Articles and blogs"
 permalink: /blog/
 ---
