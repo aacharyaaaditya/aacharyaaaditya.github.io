@@ -129,7 +129,7 @@ h2 {
 .content-container {
   max-width: 1000px;           /* match header/nav/footer width */
   margin: 0 auto;              /* center it horizontally */
-  padding: 2rem;               /* spacing inside */
+  padding: 0rem;               /* spacing inside */
   margin-top: 0;               /* removes default top spacing */
   padding-top: 0;              /* ensure no padding adds extra space */
   margin-bottom: 0;   /* removes default top spacing */
