@@ -1,12 +1,144 @@
 ---
-layout: default
-title: "Articles and blogs"
-permalink: /blog/
+layout: page
+title: Articles and blogs
+permalink: /articles-blogs/
 ---
 
+<h2> Recent articles </h2>
+
+
+<style>
+  /* Container for all local posts */
+  local-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Postcard styling */
+  .postcard {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+  }
+
+  .postcard:hover {
+    transform: translateY(-2px);
+  }
+
+  .postcard-content {
+    flex: 1;
+  }
+
+  .postcard img {
+    width: 200px;
+    height: 140px;
+    object-fit: cover;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .postcard-content h4 {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+    color: #222;
+  }
+
+  .divider {
+    height: 1px;
+    background: #ccc;
+    margin: 8px 0;
+  }
+
+  .meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .summary {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .categories-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .category-label {
+    font-size: 0.8rem;
+    color: #555;
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .category-tag {
+    border: 1px solid #444;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    color: #444;
+    text-decoration: none;
+    text-transform: capitalize;
+  }
+
+  .postcard a {
+    color: red;
+    text-decoration: none;
+  }
+
+  .postcard a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+
+<div id="local-posts">
+  {% for post in site.posts %}
+    <div class="postcard">
+      {% if post.thumbnail %}
+        <img src="{{ post.thumbnail }}" alt="Thumbnail">
+      {% endif %}
+      <div class="postcard-content">
+        <h4><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
+        <div class="divider"></div>
+        <div class="meta">
+          By <a href="{{ site.baseurl }}/about">Aditya Acharya</a>
+          on {{ post.date | date: "%b %d, %Y" }}
+        </div>
+        <div class="summary">
+          {{ post.excerpt | strip_html | truncatewords: 40 }}
+        </div>
+        {% if post.categories %}
+          <div class="categories-row">
+            <span class="category-label">Categories:</span>
+            {% for category in post.categories %}
+              <a class="category-tag" href="{{ '/categories/' | append: category | relative_url }}">{{ category }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+<h2> Recent blogs from wordpress </h2>
 The latest posts from my wordpress blog are fetched here automatically. Clicking the titles below will take you to aacharyaaaditya.wordpress.com urls | तलका लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन् ।
-<hr>
-<p>
 
 <style>
   .postcard {
@@ -33,8 +165,8 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
 
   /* Thumbnail styles */
   .postcard img {
-    width: 250px;
-    height: 180px;
+    width: 200px;
+    height: 120px;
     object-fit: cover;
     border: 1px solid #aaa;
     border-radius: 4px;
@@ -53,18 +185,18 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
   /* Divider below title */
   .divider { height: 1px; background: #e53935; margin: 8px 0; }
 
-  .meta { font-size: 16px; color: #0D0C0C; margin-bottom: 10px; }
+  .meta { font-size: 14px; color: #0D0C0C; margin-bottom: 10px; }
   .meta a { color: #1e3a8a; text-decoration: none; }
 
-  .summary { font-size: 16px; margin-bottom: 12px; color: #0D0C0C; }
+  .summary { font-size: 15px; margin-bottom: 12px; color: #0D0C0C; }
 
   .categories-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .category-label { font-size: 16px; color: #555; font-style: italic; white-space: nowrap; }
+  .category-label { font-size: 14px; color: #555; font-style: italic; white-space: nowrap; }
 
   .category-tag {
     border: 1px solid #444;
-    padding: 3px 8px;
-    font-size: 14px;
+    padding: 3px 6px;
+    font-size: 12px;
     color: #333;
     text-decoration: none;
     text-transform: capitalize;
@@ -154,5 +286,3 @@ The latest posts from my wordpress blog are fetched here automatically. Clicking
 })();
 </script>
 
-
-Visit <a href="https://aacharyaaaditya.wordpress.com" target="_blank">https://aacharyaaaditya.wordpress.com</a> for all articles and blogs.
