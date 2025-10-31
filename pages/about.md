@@ -106,4 +106,12 @@ A Himalayan village boy from Nepal who loves simplicity and directness. Nature, 
 <hr class="thin-line">
 <hr class="thin-line">
 
-Read about our amazing two-year journey during our MSc studies in Europe <a href="(https://europeanforestry.school.blog/)">https://europeanforestry.school.blog/</a>
+<h2> Also read 
+  
+Our amazing two-year journey during MSc studies in Europe <a href="(https://europeanforestry.school.blog/)">https://europeanforestry.school.blog/</a>
+<hr>
+
+मुक्तक लेख्ने साथीहरू (धेरैजसोको भेट अनलाइनमा मात्र भएको छ!) मिलेर बनाएको सामूहिक ब्लग (मुक्तकहरू मात्र) <a href="(https://muktakbloggers.wordpress.com/)">https://muktakbloggers.wordpress.com/</a>
+
+<hr class="thin-line">
+<hr class="thin-line">
