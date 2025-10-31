@@ -105,3 +105,5 @@ A Himalayan village boy from Nepal who loves simplicity and directness. Nature, 
 - थाहा छैन । भविष्यको गर्भमा रहेका अनपेक्षित घुम्तीहरुका पर्खाइमा मस्तसँग जिउँदै ।
 <hr class="thin-line">
 <hr class="thin-line">
+
+Read about our amazing two-year journey during our MSc studies in Europe <a href="(https://europeanforestry.school.blog/)">https://europeanforestry.school.blog/</a>
