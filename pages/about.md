@@ -106,7 +106,7 @@ A Himalayan village boy from Nepal who loves simplicity and directness. Nature, 
 <hr class="thin-line">
 <hr class="thin-line">
 
-<h2> Also read 
+<h2> Also read </h2>
   
 Our amazing two-year journey during MSc studies in Europe <a href="(https://europeanforestry.school.blog/)">https://europeanforestry.school.blog/</a>
 <hr>
