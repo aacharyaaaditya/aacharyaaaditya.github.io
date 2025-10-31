@@ -30,7 +30,7 @@ title: Transitory times - Aditya Acharya
   </div>
   <div class="slide fade">
     <img src="/assets/images/finland_helsinki_summer.JPG" alt="Photo 3">
-    <div class="caption"> A Finnish summer, in Helsinki </div>
+    <div class="caption"> Fall-in(g) Helsinki, 2018, Finland </div>
   </div>
 </div>
 
