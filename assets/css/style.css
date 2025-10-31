@@ -61,7 +61,7 @@ body {
 nav {
   background-color: yellow;  /* Light background color */
   border-top: 1px solid #007acc;   /* Top horizontal line */
-  border-bottom: 1.75px solid red; /* Bottom horizontal line */
+  border-bottom: 2px solid red; /* Bottom horizontal line */
   padding: 0.5rem 0;         /* Vertical padding */
   margin-bottom: 2rem;       /* Space below nav bar */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
@@ -231,7 +231,7 @@ line-height: 1.0; /* tighter spacing */
 
 /* Footer container */
 footer {
-  border-top: 1px solid red;
+  border-top: 1.75px solid red;
   background-color: #007acc;       /* Strong blue background */
   color: #f0f4f8;                  /* Light text color */
 
