@@ -11,5 +11,6 @@ function showSlides() {
   if (slideIndex > slides.length) {slideIndex = 1}    
   slides[slideIndex-1].style.display = "block";  
   slides[slideIndex-1].classList.add("active"); // add active to show caption
-  setTimeout(showSlides, 4000); // Change image every 3 seconds
+  setTimeout(showSlides, 5000); // Change image every 3 seconds
 }
+
