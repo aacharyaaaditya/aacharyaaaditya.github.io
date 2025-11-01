@@ -73,6 +73,8 @@ Countries visited:
 <hr>
 Send an email to aacharyaaaditya[at]gmail[dot]com for a detailed, professional curriculum vitae.
 
+![about-photo](https://github.com/user-attachments/assets/2e843774-1a74-453e-ab5b-7112fab26dc1)
+
 <hr class="thin-line">
 <hr class="thin-line">
 
