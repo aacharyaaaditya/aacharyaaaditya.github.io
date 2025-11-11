@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include head.html %}
+
+  <style>
+    /* --- Layout container --- */
+    .site-wrapper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 0 auto;
+      max-width: 1550px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* --- Sidebar container --- */
+    .sidebar {
+      width: 200px;
+      min-width: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 1.5rem;
+      height: fit-content;
+    }
+
+    /* --- Sidebar blocks --- */
+    .sidebar-block {
+      background: #0b2e4f;
+      color: #f5f5f5;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .sidebar-block img {
+      width: 150px;
+      height: 200px;
+      border-radius: 10%;
+      object-fit: cover;
+      margin-bottom: 0.8rem;
+    }
+
+    .sidebar-block h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.5rem;
+      color: #f3d37a;
+      margin-bottom: 0.4rem;
+    }
+
+    .sidebar-block p {
+      font-size: 0.85rem;
+      color: #e0e0e0;
+      line-height: 1.35;
+      margin-bottom: 0.8rem;
+    }
+
+    .sidebar-block a {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+      transition: background 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-block a:hover {
+      background: #1e40af;
+    }
+
+    /* --- Main content area --- */
+    .page-column {
+      flex: 1;
+      min-width: 0;
+      max-width: 1300px; /* Matches header/footer width */
+      background: #f4f7fb;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .page-inner {
+      padding: 0px 10px;
+    }
+
+    /* --- Post box --- */
+    .post-box {
+      background: #EDE3E1;
+      border-radius: 0;
+      padding: 2rem 2.5rem;
+      margin: 2rem auto;
+      max-width: 100%; /* matches page-column width */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 0px solid #000000;
+      text-align: justify; /* justify text */
+    }
+
+    /* --- Post header --- */
+    .post-header {
+      text-align: left;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+      padding-bottom: 1rem;
+    }
+
+    .post-header img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .post-header h1 {
+      font-size: 1.6rem; /* smaller title font */
+      font-weight: 700;
+      color: #0b2e4f;
+      margin-bottom: 0.3rem;
+    }
+
+    .post-meta {
+      font-size: 0.9rem;
+      color: #444;
+      font-style: italic;
+    }
+
+    /* --- Post content text --- */
+    .post-box p {
+      line-height: 1.7;
+      color: #333;
+      font-size: 1.05rem;
+    }
+
+    .post-box a {
+      color: #2563eb;
+      text-decoration: none;
+      border-bottom: 1px dotted #2563eb;
+      transition: color 0.2s;
+    }
+
+    .post-box a:hover {
+      color: #1e40af;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 1000px) {
+      .site-wrapper {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .sidebar {
+        width: 100%;
+        position: relative;
+      }
+      .page-column {
+        max-width: 100%;
+      }
+      .post-box {
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+      .post-header h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site-wrapper">
+    <!-- ✅ Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <img src="/assets/images/profile.jpg" alt="Aditya Acharya">
+        <h2>Transitory Times</h2>
+      </div>
+
+      <div class="sidebar-block">
+        <p>A personal website by Aditya Acharya.</p>
+        <a href="/">Go to Home</a>
+      </div>
+    </aside>
+
+    <!-- ✅ Main Column -->
+    <div class="page-column">
+      {% include header.html %}
+      <div class="page-inner">
+        <div class="post-box">
+          <header class="post-header">
+            {% if page.image %}
+              <img src="{{ page.image }}" alt="{{ page.title }}">
+            {% endif %}
+            <h1>{{ page.title }}</h1>
+            {% if page.date %}
+              <div class="post-meta">Posted on {{ page.date | date: "%B %d, %Y" }}</div>
+            {% endif %}
+          </header>
+
+          {{ content }}
+        </div>
+      </div>
+      {% include footer.html %}
+    </div>
+  </div>
+</body>
+</html>
