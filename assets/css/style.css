@@ -12,6 +12,10 @@ body {
   background-color: #ffffff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  border-top: 1px solid black;   /* Top horizontal line */
+  border-bottom: 1px solid black; /* Bottom horizontal line */
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 
@@ -28,7 +32,7 @@ body {
   padding: 1rem 2rem;             /* space inside the background */
   background-color: #007acc;      /* solid blue background */
   text-align: center;             /* center the text horizontally */
-  border-radius: 5px 5px 0 0;             /* optional: rounded corners */
+  border-radius: 2px 2px 0 0;             /* optional: rounded corners */
   box-sizing: border-box;         /* ensures padding doesn’t increase total width */
 }
 
@@ -60,7 +64,7 @@ body {
 /* Navigation bar container */
 nav {
   background-color: yellow;  /* Light background color */
-  border-top: 1px solid #007acc;   /* Top horizontal line */
+  border-top: 2px solid white;   /* Top horizontal line */
   border-bottom: 2px solid red; /* Bottom horizontal line */
   padding: 0.5rem 0;         /* Vertical padding */
   margin-bottom: 2rem;       /* Space below nav bar */
@@ -239,7 +243,7 @@ footer {
   padding: 1.5rem 2rem;            /* slightly more padding for breathing space */
   font-size: 0.95rem;
   margin-top: 3rem;
-  border-radius: 0 0 8px 8px;      /* subtle rounded bottom corners */
+  border-radius: 0 0 2px 2px;      /* subtle rounded bottom corners */
   box-shadow: 0 -2px 6px rgba(0,0,0,0.1); /* subtle top shadow for depth */
 }
 
