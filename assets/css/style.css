@@ -11,7 +11,7 @@ body {
   color: #333;
   background-color: #ffffff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 0px;
   border-top: 1px solid black;   /* Top horizontal line */
   border-bottom: 1px solid black; /* Bottom horizontal line */
   border-left: 1px solid black;
