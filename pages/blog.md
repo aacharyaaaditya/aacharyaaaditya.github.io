@@ -5,7 +5,8 @@ permalink: /articles-blogs/
 ---
 
 <h2> Recent articles and blogs </h2>
-The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically <p> तलका लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन् </p>
+<p> The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically </p> 
+<p> तलका लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन् </p>
 
 <style>
   .postcard {
@@ -170,7 +171,7 @@ The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here a
       }
 
       allPosts = data.items;
-      renderPosts(10);
+      renderPosts(5);
     })
     .catch(err => {
       console.error(err);
@@ -178,6 +179,6 @@ The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here a
       loadMoreBtn.style.display = 'none';
     });
 
-  loadMoreBtn.addEventListener('click', () => renderPosts(7));
+  loadMoreBtn.addEventListener('click', () => renderPosts(5));
 })();
 </script>
