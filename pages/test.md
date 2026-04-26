@@ -5,140 +5,191 @@ permalink: /test/
 ---
 <style>
   .postcard {
-    border: 1px solid #ddd;
-    padding: 16px;
+    border: 1px solid #656565;
+    padding: 20px;
     margin-bottom: 24px;
-    border-radius: 4px;
-    background: #fff;
+    border-radius: 0 15px 0 15px;
+    background: #DCDBDA;
     font-family: sans-serif;
     display: flex;
     justify-content: space-between;
     gap: 16px;
     align-items: flex-start;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .postcard:hover { transform: translateY(-2px); }
+  .postcard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  }
+
   .postcard-content { flex: 1; }
 
-  /* Thumbnail styles */
   .postcard img {
     width: 200px;
-    height: 140px;
+    height: 120px;
     object-fit: cover;
     border: 1px solid #aaa;
-    border-radius: 2px;
+    border-radius: 4px;
     flex-shrink: 0;
     transition: transform 0.3s ease;
-    display: block; /* important */
+    display: block;
   }
 
   .postcard img:hover { transform: scale(1.05); }
 
-  /* Post titles */
-  .postcard-content h4 { margin: 0 0 6px; font-size: 18px; color: #1e3a8a; }
+  .postcard-content h4 { margin: 0 0 6px; font-size: 20px; color: #1e3a8a; }
   .postcard-content h4 a { color: #1e3a8a; text-decoration: none; }
   .postcard-content h4 a:hover { text-decoration: underline; }
 
-  /* Divider below title */
   .divider { height: 1px; background: #e53935; margin: 8px 0; }
 
-  .meta { font-size: 13px; color: #666; margin-bottom: 10px; }
+  .meta { font-size: 14px; color: #0D0C0C; margin-bottom: 10px; }
   .meta a { color: #1e3a8a; text-decoration: none; }
 
-  .summary { font-size: 14px; margin-bottom: 12px; color: #333; }
+  .summary { font-size: 15px; margin-bottom: 12px; color: #0D0C0C; }
 
   .categories-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .category-label { font-size: 13px; color: #555; font-style: italic; white-space: nowrap; }
+  .category-label { font-size: 14px; color: #555; font-style: italic; white-space: nowrap; }
 
   .category-tag {
-    border: 2px solid #444;
-    padding: 2px 6px;
+    border: 1px solid #444;
+    padding: 3px 6px;
     font-size: 12px;
     color: #333;
     text-decoration: none;
     text-transform: capitalize;
-    border-radius: 2px;
+    border-radius:0 10px 0 10px;
     background-color: #fff;
-    display: inline-block; /* ensures links are clickable */
-    transition: border-color 0.3s ease;
+    display: inline-block;
+    transition: border-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
   }
 
-  .wp-heading { font-family: sans-serif; font-size: 18px; color: #1e3a8a; margin: 32px 0 24px; text-align: left; display: inline-block; border-bottom: none; padding-bottom: 3px; line-height: 1.3; }
+  .category-tag:hover {
+    transform: scale(1.05);
+    border-color: #1e3a8a;
+  }
+
+  .wp-heading { font-family: sans-serif; font-size: 22px; color: #1e3a8a; margin: 32px 0 24px; text-align: left; display: inline-block; border-bottom: none; padding-bottom: 3px; line-height: 1.3; }
+
+  .load-more-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #444;
+    background: #fff;
+    border-radius: 6px;
+  }
 </style>
 
 <div id="wp-latest-posts"></div>
+<button id="load-more" class="load-more-btn">Load More</button>
 
 <script>
 (function() {
   const container = document.getElementById('wp-latest-posts');
-  const feed = 'https://aacharyaaaditya.wordpress.com/feed/';
+  const loadMoreBtn = document.getElementById('load-more');
+
+  const PER_PAGE = 7;
+  let currentPage = 1;
+  let totalPages = null;
 
   const categoryColorMap = {};
   let hueIndex = 0;
 
   function getCategoryColor(name) {
     if (categoryColorMap[name]) return categoryColorMap[name];
-    const hue = (hueIndex * 137.508) % 360; // golden angle
+    const hue = (hueIndex * 137.508) % 360;
     hueIndex++;
     const color = `hsl(${hue}, 70%, 50%)`;
     categoryColorMap[name] = color;
     return color;
   }
 
-  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed))
-    .then(response => response.json())
-    .then(data => {
-      if (!data.items || data.items.length === 0) {
-        container.innerHTML = "<p>No posts found.</p>";
-        return;
-      }
+  function stripHTML(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+  }
 
-      data.items.slice(0, 5).forEach(item => {
-        const postDiv = document.createElement('div');
-        postDiv.className = 'postcard';
+  function createPost(item) {
+    const postDiv = document.createElement('div');
+    postDiv.className = 'postcard';
 
-        const imgSrc = item.thumbnail || 'https://via.placeholder.com/200x140?text=No+Image';
-        const img = `<a href="${item.link}" target="_blank"><img src="${imgSrc}" alt="Thumbnail"></a>`; // clickable
+    const imgSrc = (item.jetpack_featured_media_url) 
+      ? item.jetpack_featured_media_url 
+      : 'https://via.placeholder.com/200x180?text=No+Image';
 
-        const title = `<h4><a href="${item.link}" target="_blank">${item.title}</a></h4>`;
-        const divider = `<div class="divider"></div>`;
+    const img = `<a href="${item.link}" target="_blank"><img src="${imgSrc}" alt="Thumbnail"></a>`;
 
-        const pubDate = new Date(item.pubDate);
-        const meta = `
-          <div class="meta">
-            By <a href="https://aacharyaaaditya.wordpress.com/author/aacharyaaaditya/" target="_blank">Aditya Acharya</a>
-            on ${pubDate.toDateString()}
-          </div>`;
+    const title = `<h4><a href="${item.link}" target="_blank">${item.title.rendered}</a></h4>`;
+    const divider = `<div class="divider"></div>`;
 
-        const plainText = item.description.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ');
-        const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
-        const summaryText = sentences.slice(0, 3).join(' ').trim() || plainText.split(' ').slice(0, 40).join(' ') + '...';
-        const summary = `<div class="summary">${summaryText}</div>`;
+    const pubDate = new Date(item.date);
+    const meta = `
+      <div class="meta">
+        By <a href="https://aacharyaaaditya.wordpress.com/author/aacharyaaaditya/" target="_blank">Aditya Acharya</a>
+        on ${pubDate.toDateString()}
+      </div>`;
 
-        const categoryLabel = `<span class="category-label">More by the author in</span>`;
-        const categoryLinks = (item.categories || []).slice(0, 2).map(catName => {
-          const slug = encodeURIComponent(catName.toLowerCase().replace(/\s+/g, '-'));
-          const url = `https://aacharyaaaditya.wordpress.com/category/${slug}/`;
-          const color = getCategoryColor(catName);
-          const style = `border-color: ${color};`;
-          return `<a class="category-tag" style="${style}" href="${url}" target="_blank">${catName}</a>`;
-        }).join('');
+    const plainText = stripHTML(item.excerpt.rendered).replace(/\s+/g, ' ');
+    const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
+    const summaryText = sentences.slice(0, 3).join(' ').trim() 
+      || plainText.split(' ').slice(0, 40).join(' ') + '...';
 
-        const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
+    const summary = `<div class="summary">${summaryText}</div>`;
 
-        // Important: append content first, then image to avoid overlapping links
-        postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
-        container.appendChild(postDiv);
+    const categoryLabel = `<span class="category-label">Posted in</span>`;
+
+    const categoryLinks = (item._embedded?.['wp:term']?.[0] || [])
+      .slice(0, 2)
+      .map(cat => {
+        const color = getCategoryColor(cat.name);
+        const style = `border-color: ${color};`;
+        return `<a class="category-tag" style="${style}" href="${cat.link}" target="_blank">${cat.name}</a>`;
+      }).join('');
+
+    const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
+
+    postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
+
+    container.appendChild(postDiv);
+  }
+
+  function fetchPosts() {
+    fetch(`https://aacharyaaaditya.wordpress.com/wp-json/wp/v2/posts?per_page=${PER_PAGE}&page=${currentPage}&_embed`)
+      .then(res => {
+        totalPages = parseInt(res.headers.get('X-WP-TotalPages'));
+        return res.json();
+      })
+      .then(data => {
+        if (!data || data.length === 0) {
+          loadMoreBtn.style.display = 'none';
+          return;
+        }
+
+        data.forEach(createPost);
+
+        if (currentPage >= totalPages) {
+          loadMoreBtn.style.display = 'none';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        loadMoreBtn.style.display = 'none';
       });
-    })
-    .catch(err => {
-      console.error(err);
-      container.innerHTML = `<p>Error loading posts.</p>`;
-    });
+  }
+
+  loadMoreBtn.addEventListener('click', () => {
+    currentPage++;
+    fetchPosts();
+  });
+
+  // Initial load
+  fetchPosts();
 })();
 </script>
-
-I can simply write here, right?
