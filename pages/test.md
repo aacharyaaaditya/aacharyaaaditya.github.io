@@ -3,6 +3,8 @@ layout: page
 title: Test
 permalink: /test/
 ---
+
+<h2> Recent articles and blogs </h2>
 <style>
   .postcard {
     border: 1px solid #656565;
@@ -93,13 +95,12 @@ permalink: /test/
 (function() {
   const container = document.getElementById('wp-latest-posts');
   const loadMoreBtn = document.getElementById('load-more');
-
-  const PER_PAGE = 7;
-  let currentPage = 1;
-  let totalPages = null;
+  const feed = 'https://aacharyaaaditya.wordpress.com/feed/';
 
   const categoryColorMap = {};
   let hueIndex = 0;
+  let currentIndex = 0;
+  let allPosts = [];
 
   function getCategoryColor(name) {
     if (categoryColorMap[name]) return categoryColorMap[name];
@@ -110,86 +111,74 @@ permalink: /test/
     return color;
   }
 
-  function stripHTML(html) {
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent || div.innerText || '';
-  }
+  function renderPosts(count) {
+    const nextPosts = allPosts.slice(currentIndex, currentIndex + count);
 
-  function createPost(item) {
-    const postDiv = document.createElement('div');
-    postDiv.className = 'postcard';
+    nextPosts.forEach(item => {
+      const postDiv = document.createElement('div');
+      postDiv.className = 'postcard';
 
-    const imgSrc = (item.jetpack_featured_media_url) 
-      ? item.jetpack_featured_media_url 
-      : 'https://via.placeholder.com/200x180?text=No+Image';
+      const imgSrc = item.thumbnail || 'https://via.placeholder.com/200x180?text=No+Image';
+      const img = `<a href="${item.link}" target="_blank"><img src="${imgSrc}" alt="Thumbnail"></a>`;
 
-    const img = `<a href="${item.link}" target="_blank"><img src="${imgSrc}" alt="Thumbnail"></a>`;
+      const title = `<h4><a href="${item.link}" target="_blank">${item.title}</a></h4>`;
+      const divider = `<div class="divider"></div>`;
 
-    const title = `<h4><a href="${item.link}" target="_blank">${item.title.rendered}</a></h4>`;
-    const divider = `<div class="divider"></div>`;
+      const pubDate = new Date(item.pubDate);
+      const meta = `
+        <div class="meta">
+          By <a href="https://aacharyaaaditya.wordpress.com/author/aacharyaaaditya/" target="_blank">Aditya Acharya</a>
+          on ${pubDate.toDateString()}
+        </div>`;
 
-    const pubDate = new Date(item.date);
-    const meta = `
-      <div class="meta">
-        By <a href="https://aacharyaaaditya.wordpress.com/author/aacharyaaaditya/" target="_blank">Aditya Acharya</a>
-        on ${pubDate.toDateString()}
-      </div>`;
+      const plainText = item.description.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ');
+      const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
+      const summaryText = sentences.slice(0, 3).join(' ').trim() || plainText.split(' ').slice(0, 40).join(' ') + '...';
+      const summary = `<div class="summary">${summaryText}</div>`;
 
-    const plainText = stripHTML(item.excerpt.rendered).replace(/\s+/g, ' ');
-    const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
-    const summaryText = sentences.slice(0, 3).join(' ').trim() 
-      || plainText.split(' ').slice(0, 40).join(' ') + '...';
-
-    const summary = `<div class="summary">${summaryText}</div>`;
-
-    const categoryLabel = `<span class="category-label">Posted in</span>`;
-
-    const categoryLinks = (item._embedded?.['wp:term']?.[0] || [])
-      .slice(0, 2)
-      .map(cat => {
-        const color = getCategoryColor(cat.name);
+      const categoryLabel = `<span class="category-label">Posted in</span>`;
+      const categoryLinks = (item.categories || []).slice(0, 2).map(catName => {
+        const slug = encodeURIComponent(catName.toLowerCase().replace(/\s+/g, '-'));
+        const url = `https://aacharyaaaditya.wordpress.com/category/${slug}/`;
+        const color = getCategoryColor(catName);
         const style = `border-color: ${color};`;
-        return `<a class="category-tag" style="${style}" href="${cat.link}" target="_blank">${cat.name}</a>`;
+        return `<a class="category-tag" style="${style}" href="${url}" target="_blank">${catName}</a>`;
       }).join('');
 
-    const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
+      const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
 
-    postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
+      postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
+      container.appendChild(postDiv);
+    });
 
-    container.appendChild(postDiv);
+    currentIndex += count;
+
+    if (currentIndex >= allPosts.length) {
+      loadMoreBtn.style.display = 'none';
+    }
   }
 
-  function fetchPosts() {
-    fetch(`https://aacharyaaaditya.wordpress.com/wp-json/wp/v2/posts?per_page=${PER_PAGE}&page=${currentPage}&_embed`)
-      .then(res => {
-        totalPages = parseInt(res.headers.get('X-WP-TotalPages'));
-        return res.json();
-      })
-      .then(data => {
-        if (!data || data.length === 0) {
-          loadMoreBtn.style.display = 'none';
-          return;
-        }
-
-        data.forEach(createPost);
-
-        if (currentPage >= totalPages) {
-          loadMoreBtn.style.display = 'none';
-        }
-      })
-      .catch(err => {
-        console.error(err);
+  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed))
+    .then(response => response.json())
+    .then(data => {
+      if (!data.items || data.items.length === 0) {
+        container.innerHTML = "<p>No posts found.</p>";
         loadMoreBtn.style.display = 'none';
-      });
-  }
+        return;
+      }
 
-  loadMoreBtn.addEventListener('click', () => {
-    currentPage++;
-    fetchPosts();
-  });
+      allPosts = data.items;
+      renderPosts(5);
+    })
+    .catch(err => {
+      console.error(err);
+      container.innerHTML = `<p>Error loading posts.</p>`;
+      loadMoreBtn.style.display = 'none';
+    });
 
-  // Initial load
-  fetchPosts();
+  loadMoreBtn.addEventListener('click', () => renderPosts(5));
 })();
 </script>
+
+<p> The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically </p> 
+<p> यी लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन् </p>
