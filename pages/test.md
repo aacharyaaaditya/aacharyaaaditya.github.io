@@ -4,181 +4,286 @@ title: Test
 permalink: /test/
 ---
 
-<h2> Recent articles and blogs </h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Writing | Blog</title>
+
 <style>
-  .postcard {
-    border: 1px solid #656565;
-    padding: 20px;
-    margin-bottom: 24px;
-    border-radius: 0 15px 0 15px;
-    background: #DCDBDA;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: flex-start;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+* {
+    box-sizing: border-box;
+}
 
-  .postcard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-  }
+body {
+    margin: 0;
+    background: #f5f3ee;
+    color: #292929;
+    font-family: Georgia, serif;
+}
 
-  .postcard-content { flex: 1; }
+header {
+    text-align: center;
+    padding: 65px 20px 35px;
+}
 
-  .postcard img {
-    width: 200px;
-    height: 120px;
+header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #777;
+    font-family: Arial, sans-serif;
+}
+
+.blog-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+}
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+/* Postcard design */
+.postcard {
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.postcard:hover {
+    transform: translateY(-6px) rotate(-0.4deg);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.13);
+}
+
+.postcard img {
+    width: 100%;
+    height: 220px;
     object-fit: cover;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
     display: block;
-  }
+}
 
-  .postcard img:hover { transform: scale(1.05); }
+.postcard-content {
+    padding: 23px;
+}
 
-  .postcard-content h4 { margin: 0 0 6px; font-size: 20px; color: #1e3a8a; }
-  .postcard-content h4 a { color: #1e3a8a; text-decoration: none; }
-  .postcard-content h4 a:hover { text-decoration: underline; }
+.post-date {
+    font-family: Arial, sans-serif;
+    color: #999;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
-  .divider { height: 1px; background: #e53935; margin: 8px 0; }
+.postcard h2 {
+    font-size: 22px;
+    line-height: 1.35;
+    margin: 12px 0;
+}
 
-  .meta { font-size: 14px; color: #0D0C0C; margin-bottom: 10px; }
-  .meta a { color: #1e3a8a; text-decoration: none; }
-
-  .summary { font-size: 15px; margin-bottom: 12px; color: #0D0C0C; }
-
-  .categories-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .category-label { font-size: 14px; color: #555; font-style: italic; white-space: nowrap; }
-
-  .category-tag {
-    border: 1px solid #444;
-    padding: 3px 6px;
-    font-size: 12px;
-    color: #333;
-    text-decoration: none;
-    text-transform: capitalize;
-    border-radius:0 10px 0 10px;
-    background-color: #fff;
-    display: inline-block;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-  }
-
-  .category-tag:hover {
-    transform: scale(1.05);
-    border-color: #1e3a8a;
-  }
-
-  .wp-heading { font-family: sans-serif; font-size: 22px; color: #1e3a8a; margin: 32px 0 24px; text-align: left; display: inline-block; border-bottom: none; padding-bottom: 3px; line-height: 1.3; }
-
-  .load-more-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
+.postcard p {
+    color: #666;
     font-size: 14px;
-    cursor: pointer;
-    border: 1px solid #444;
-    background: #fff;
-    border-radius: 6px;
-  }
-</style>
+    line-height: 1.7;
+}
 
-<div id="wp-latest-posts"></div>
-<button id="load-more" class="load-more-btn">Load More</button>
+.read-more {
+    display: inline-block;
+    margin-top: 12px;
+    color: #a16e4b;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+#status {
+    text-align: center;
+    padding: 35px;
+    font-family: Arial, sans-serif;
+    color: #777;
+}
+
+.pagination {
+    text-align: center;
+    padding: 40px;
+}
+
+button {
+    background: #292929;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+@media (max-width: 850px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding-top: 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Words & Thoughts</h1>
+    <p>A collection of my writings, reflections and ideas.</p>
+</header>
+
+<main class="blog-container">
+    <div id="status">Loading posts...</div>
+    <div class="posts-grid" id="posts"></div>
+
+    <div class="pagination">
+        <button id="loadMore" onclick="loadPosts()" hidden>
+            Load More
+        </button>
+    </div>
+</main>
 
 <script>
-(function() {
-  const container = document.getElementById('wp-latest-posts');
-  const loadMoreBtn = document.getElementById('load-more');
-  const feed = 'https://aacharyaaaditya.wordpress.com/feed/';
+const API =
+"https://aacharyaaaditya.wordpress.com/wp-json/wp/v2/posts";
 
-  const categoryColorMap = {};
-  let hueIndex = 0;
-  let currentIndex = 0;
-  let allPosts = [];
+let currentPage = 1;
+let totalPages = 1;
 
-  function getCategoryColor(name) {
-    if (categoryColorMap[name]) return categoryColorMap[name];
-    const hue = (hueIndex * 137.508) % 360;
-    hueIndex++;
-    const color = `hsl(${hue}, 70%, 50%)`;
-    categoryColorMap[name] = color;
-    return color;
-  }
+async function loadPosts() {
+    const status = document.getElementById("status");
+    const button = document.getElementById("loadMore");
 
-  function renderPosts(count) {
-    const nextPosts = allPosts.slice(currentIndex, currentIndex + count);
+    button.disabled = true;
+    button.textContent = "Loading...";
 
-    nextPosts.forEach(item => {
-      const postDiv = document.createElement('div');
-      postDiv.className = 'postcard';
+    try {
+        const response = await fetch(
+            `${API}?per_page=12&page=${currentPage}&_embed`
+        );
 
-      const imgSrc = item.thumbnail || 'https://via.placeholder.com/200x180?text=No+Image';
-      const img = `<a href="${item.link}" target="_blank"><img src="${imgSrc}" alt="Thumbnail"></a>`;
+        if (!response.ok) {
+            throw new Error("Could not retrieve posts.");
+        }
 
-      const title = `<h4><a href="${item.link}" target="_blank">${item.title}</a></h4>`;
-      const divider = `<div class="divider"></div>`;
+        totalPages = Number(
+            response.headers.get("X-WP-TotalPages") || 1
+        );
 
-      const pubDate = new Date(item.pubDate);
-      const meta = `
-        <div class="meta">
-          By <a href="https://aacharyaaaditya.wordpress.com/author/aacharyaaaditya/" target="_blank">Aditya Acharya</a>
-          on ${pubDate.toDateString()}
-        </div>`;
+        const posts = await response.json();
 
-      const plainText = item.description.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ');
-      const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
-      const summaryText = sentences.slice(0, 3).join(' ').trim() || plainText.split(' ').slice(0, 40).join(' ') + '...';
-      const summary = `<div class="summary">${summaryText}</div>`;
+        if (posts.length === 0 && currentPage === 1) {
+            status.textContent = "No posts found.";
+            button.hidden = true;
+            return;
+        }
 
-      const categoryLabel = `<span class="category-label">Posted in</span>`;
-      const categoryLinks = (item.categories || []).slice(0, 2).map(catName => {
-        const slug = encodeURIComponent(catName.toLowerCase().replace(/\s+/g, '-'));
-        const url = `https://aacharyaaaditya.wordpress.com/category/${slug}/`;
-        const color = getCategoryColor(catName);
-        const style = `border-color: ${color};`;
-        return `<a class="category-tag" style="${style}" href="${url}" target="_blank">${catName}</a>`;
-      }).join('');
+        status.textContent = "";
 
-      const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
+        const container = document.getElementById("posts");
 
-      postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
-      container.appendChild(postDiv);
-    });
+        posts.forEach(post => {
 
-    currentIndex += count;
+            const image =
+                post._embedded?.["wp:featuredmedia"]?.[0]
+                    ?.source_url ||
+                "https://placehold.co/600x400/e8e3dc/777?text=My+Writing";
 
-    if (currentIndex >= allPosts.length) {
-      loadMoreBtn.style.display = 'none';
+            const title = document.createElement("h2");
+            title.textContent = post.title.rendered;
+
+            const date = document.createElement("div");
+            date.className = "post-date";
+            date.textContent = new Date(post.date)
+                .toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+
+            const excerpt = document.createElement("p");
+
+            const parser = new DOMParser();
+            const excerptDoc = parser.parseFromString(
+                post.excerpt.rendered,
+                "text/html"
+            );
+
+            excerpt.textContent =
+                excerptDoc.body.textContent.trim()
+                    .slice(0, 160) + "...";
+
+            const img = document.createElement("img");
+            img.src = image;
+            img.alt = post.title.rendered;
+            img.loading = "lazy";
+
+            const link = document.createElement("a");
+            link.href = post.link;
+            link.className = "read-more";
+            link.textContent = "READ ARTICLE →";
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+
+            const content = document.createElement("div");
+            content.className = "postcard-content";
+
+            content.append(date, title, excerpt, link);
+
+            const card = document.createElement("article");
+            card.className = "postcard";
+
+            card.append(img, content);
+            container.appendChild(card);
+        });
+
+        currentPage++;
+
+        button.hidden = currentPage > totalPages;
+        button.textContent = "Load More";
+
+    } catch (error) {
+        status.textContent =
+            "Unable to load posts. Please try again later.";
+
+        console.error(error);
+
+    } finally {
+        button.disabled = false;
     }
-  }
+}
 
-  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed))
-    .then(response => response.json())
-    .then(data => {
-      if (!data.items || data.items.length === 0) {
-        container.innerHTML = "<p>No posts found.</p>";
-        loadMoreBtn.style.display = 'none';
-        return;
-      }
-
-      allPosts = data.items;
-      renderPosts(5);
-    })
-    .catch(err => {
-      console.error(err);
-      container.innerHTML = `<p>Error loading posts.</p>`;
-      loadMoreBtn.style.display = 'none';
-    });
-
-  loadMoreBtn.addEventListener('click', () => renderPosts(5));
-})();
+// Load the first batch automatically
+loadPosts();
 </script>
 
-<p> The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically </p> 
-<p> यी लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन् </p>
+</body>
+</html>
