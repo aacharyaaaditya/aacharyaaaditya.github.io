@@ -1,8 +1,3 @@
----
-layout: page
-title: Test
-permalink: /test/
----
 
 <!DOCTYPE html>
 <html lang="en">
