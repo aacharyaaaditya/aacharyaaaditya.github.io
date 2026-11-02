@@ -2,7 +2,7 @@
 ---
 layout: page
 title: Articles and blogs
-permalink: /articles-blogs/
+permalink: /test/
 ---
 
 <h2>Recent articles and blogs</h2>
