@@ -7,7 +7,7 @@ permalink: /articles-blogs/
 <h2> Recent articles and blogs </h2>
 <style>
   .postcard {
-    border: 1px solid #656565;
+    border: 0.5px solid #656565;
     padding: 20px;
     margin-bottom: 24px;
     border-radius: 0 15px 0 15px;
@@ -23,7 +23,7 @@ permalink: /articles-blogs/
 
   .postcard:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
   }
 
   .postcard-content { flex: 1; }
@@ -40,6 +40,9 @@ permalink: /articles-blogs/
   }
 
   .postcard img:hover { transform: scale(1.05); }
+
+  /* Site icon used when a post has no image: show it whole, not cropped */
+  .postcard img.thumb-icon { object-fit: contain; padding: 16px; background: #fff; box-sizing: border-box; }
 
   .postcard-content h4 { margin: 0 0 6px; font-size: 20px; color: #1e3a8a; }
   .postcard-content h4 a { color: #1e3a8a; text-decoration: none; }
@@ -62,7 +65,7 @@ permalink: /articles-blogs/
     color: #333;
     text-decoration: none;
     text-transform: capitalize;
-    border-radius:0 10px 0 10px;
+    border-radius:0 0 0 0;
     background-color: #fff;
     display: inline-block;
     transition: border-color 0.3s ease, transform 0.3s ease;
@@ -86,6 +89,31 @@ permalink: /articles-blogs/
     background: #fff;
     border-radius: 6px;
   }
+
+  .load-more-btn:disabled { opacity: 0.6; cursor: default; }
+
+  /* Mobile layout: stack the card, with the thumbnail on top */
+  @media (max-width: 600px) {
+    .postcard {
+      flex-direction: column-reverse;
+      padding: 14px;
+      gap: 12px;
+    }
+
+    .postcard-content { width: 100%; }
+
+    .postcard img {
+      width: 100%;
+      height: 180px;
+    }
+
+    .postcard-content h4 { font-size: 18px; }
+    .summary { font-size: 14px; }
+
+    /* No hover on touch screens, so skip the lift/zoom effects */
+    .postcard:hover { transform: none; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
+    .postcard img:hover { transform: none; }
+  }
 </style>
 
 <div id="wp-latest-posts"></div>
@@ -95,12 +123,29 @@ permalink: /articles-blogs/
 (function() {
   const container = document.getElementById('wp-latest-posts');
   const loadMoreBtn = document.getElementById('load-more');
-  const feed = 'https://aacharyaaaditya.wordpress.com/feed/';
+
+  const site = 'aacharyaaaditya.wordpress.com';
+  const pageSize = 10;
+  const apiBase = 'https://public-api.wordpress.com/rest/v1.1/sites/' + site + '/posts/'
+    + '?fields=ID,title,URL,date,excerpt,content,categories,featured_image,post_thumbnail'
+    + '&number=' + pageSize;
 
   const categoryColorMap = {};
   let hueIndex = 0;
-  let currentIndex = 0;
-  let allPosts = [];
+  let currentPage = 1;
+  let loadedCount = 0;
+  let isLoading = false;
+
+  // Icon shown on cards whose post has no image. Leave customIcon empty to use the blog's
+  // site icon (favicon) from WordPress, or paste the full URL of your own icon image there.
+  const customIcon = '';
+  let siteIcon = customIcon;
+  const iconReady = customIcon
+    ? Promise.resolve()
+    : fetch('https://public-api.wordpress.com/rest/v1.1/sites/' + site + '?fields=icon')
+        .then(r => r.json())
+        .then(data => { siteIcon = (data.icon && data.icon.img) || ''; })
+        .catch(() => {});
 
   function getCategoryColor(name) {
     if (categoryColorMap[name]) return categoryColorMap[name];
@@ -111,38 +156,65 @@ permalink: /articles-blogs/
     return color;
   }
 
-  function renderPosts(count) {
-    const nextPosts = allPosts.slice(currentIndex, currentIndex + count);
+  // Converts HTML entities (e.g. &#8217;) into normal characters
+  function decodeEntities(str) {
+    const t = document.createElement('textarea');
+    t.innerHTML = str || '';
+    return t.value;
+  }
 
-    nextPosts.forEach(item => {
+  function renderPosts(posts) {
+    posts.forEach(item => {
       const postDiv = document.createElement('div');
       postDiv.className = 'postcard';
 
-      const imgSrc = item.thumbnail || 'https://via.placeholder.com/200x180?text=No+Image';
-      const img = `<a href="${item.link}" target="_blank"><img src="${imgSrc}" alt="Thumbnail"></a>`;
+      // Thumbnail: featured image first, then the first image inside the post, then the placeholder
+      const firstImgMatch = (item.content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
+      const firstImg = firstImgMatch ? decodeEntities(firstImgMatch[1]) : '';
+      const thumb = (item.post_thumbnail && item.post_thumbnail.URL) || item.featured_image || firstImg;
+      const imgSrc = thumb || siteIcon || 'https://via.placeholder.com/200x180?text=No+Image';
+      const imgClass = thumb ? '' : 'thumb-icon';
+      const img = `<a href="${item.URL}" target="_blank"><img class="${imgClass}" src="${imgSrc}" alt="Thumbnail"></a>`;
 
-      const title = `<h4><a href="${item.link}" target="_blank">${item.title}</a></h4>`;
+      const title = `<h4><a href="${item.URL}" target="_blank">${item.title}</a></h4>`;
       const divider = `<div class="divider"></div>`;
 
-      const pubDate = new Date(item.pubDate);
+      const pubDate = new Date(item.date);
       const meta = `
         <div class="meta">
           By <a href="https://aacharyaaaditya.wordpress.com/author/aacharyaaaditya/" target="_blank">Aditya Acharya</a>
           on ${pubDate.toDateString()}
         </div>`;
 
-      const plainText = item.description.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ');
-      const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
-      const summaryText = sentences.slice(0, 3).join(' ').trim() || plainText.split(' ').slice(0, 40).join(' ') + '...';
+      // Summary: use the written excerpt when there is one; otherwise only the first sentence.
+      // An auto-generated excerpt is recognised by its trailing "…" / "[…]" / "Continue reading".
+      const ellipsisEnd = /\s*(\[\u2026\]|\u2026|\.\.\.)\s*(Continue reading.*)?$/i;
+      const rawText = decodeEntities((item.excerpt || '').replace(/<[^>]*>?/gm, '')).replace(/\s+/g, ' ').trim();
+      const isAutoExcerpt = ellipsisEnd.test(rawText);
+      const plainText = rawText.replace(ellipsisEnd, '').trim();
+
+      function limitWords(text, max) {
+        const words = text.split(' ');
+        return words.length > max ? words.slice(0, max).join(' ') + '...' : text;
+      }
+
+      let summaryText;
+      if (isAutoExcerpt) {
+        const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
+        summaryText = limitWords(sentences.length ? sentences[0].trim() : plainText, 30);
+      } else {
+        summaryText = limitWords(plainText, 60);
+      }
       const summary = `<div class="summary">${summaryText}</div>`;
 
       const categoryLabel = `<span class="category-label">Posted in</span>`;
-      const categoryLinks = (item.categories || []).slice(0, 2).map(catName => {
-        const slug = encodeURIComponent(catName.toLowerCase().replace(/\s+/g, '-'));
-        const url = `https://aacharyaaaditya.wordpress.com/category/${slug}/`;
-        const color = getCategoryColor(catName);
+      // The API returns each category with its real name and slug
+      const cats_ = Object.values(item.categories || {}).slice(0, 2);
+      const categoryLinks = cats_.map(cat => {
+        const url = `https://${site}/category/${cat.slug}/`;
+        const color = getCategoryColor(cat.name);
         const style = `border-color: ${color};`;
-        return `<a class="category-tag" style="${style}" href="${url}" target="_blank">${catName}</a>`;
+        return `<a class="category-tag" style="${style}" href="${url}" target="_blank">${decodeEntities(cat.name)}</a>`;
       }).join('');
 
       const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
@@ -150,35 +222,53 @@ permalink: /articles-blogs/
       postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
       container.appendChild(postDiv);
     });
-
-    currentIndex += count;
-
-    if (currentIndex >= allPosts.length) {
-      loadMoreBtn.style.display = 'none';
-    }
   }
 
-  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed))
-    .then(response => response.json())
-    .then(data => {
-      if (!data.items || data.items.length === 0) {
-        container.innerHTML = "<p>No posts found.</p>";
-        loadMoreBtn.style.display = 'none';
-        return;
-      }
+  function loadPosts() {
+    if (isLoading) return;
+    isLoading = true;
+    loadMoreBtn.disabled = true;
+    loadMoreBtn.textContent = 'Loading...';
 
-      allPosts = data.items;
-      renderPosts(5);
-    })
-    .catch(err => {
-      console.error(err);
-      container.innerHTML = `<p>Error loading posts.</p>`;
-      loadMoreBtn.style.display = 'none';
-    });
+    iconReady
+      .then(() => fetch(apiBase + '&page=' + currentPage))
+      .then(response => response.json())
+      .then(data => {
+        const posts = data.posts || [];
 
-  loadMoreBtn.addEventListener('click', () => renderPosts(5));
+        if (posts.length === 0 && loadedCount === 0) {
+          container.innerHTML = "<p>No posts found.</p>";
+          loadMoreBtn.style.display = 'none';
+          return;
+        }
+
+        renderPosts(posts);
+        loadedCount += posts.length;
+        currentPage++;
+
+        // Hide the button once every post has been loaded
+        if (posts.length < pageSize || loadedCount >= data.found) {
+          loadMoreBtn.style.display = 'none';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        if (loadedCount === 0) {
+          container.innerHTML = `<p>Error loading posts.</p>`;
+          loadMoreBtn.style.display = 'none';
+        }
+      })
+      .finally(() => {
+        isLoading = false;
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.textContent = 'Load More';
+      });
+  }
+
+  loadMoreBtn.addEventListener('click', loadPosts);
+  loadPosts();
 })();
 </script>
 
-<p> The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically </p> 
-<p> यी लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन् </p>
+<p> The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically. </p> 
+<p> यी लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन्।</p>
