@@ -270,5 +270,8 @@ permalink: /articles-blogs/
 })();
 </script>
 
-<p> The latest posts from my blog (aacharyaaaditya.wordpress.com) are fetched here automatically. </p> 
-<p> यी लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित (अटोमेटिक) रुपमा यहाँ देखिन्छन्।</p>
+<p> 
+The latest posts from my blog - aacharyaaaditya.wordpress.com - are fetched here automatically.
+</p>
+
+<p> यी लेखहरू aacharyaaaditya.wordpress.com मा लेखिएका हुन् र स्वचालित रुपमा यहाँ देखिन्छन्।</p>
