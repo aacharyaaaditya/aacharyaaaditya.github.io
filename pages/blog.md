@@ -29,18 +29,31 @@ permalink: /articles-blogs/
   /* Specially featured postcard */
   .postcard.featured {
     border: 2px solid #d4a017;
-    background: #FFF6DD;
+    background: #F0DFAA;
   }
 
+  /* Wrapper link around the thumbnail, so the badge can sit on top of the image */
+  .thumb-link {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* "Featured" badge in the top-left corner of the thumbnail (adds no height to the card) */
   .featured-badge {
-    display: inline-block;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 2;
     background: #1e3a8a;
     color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.5px;
-    padding: 2px 10px;
-    margin-bottom: 8px;
+    line-height: 1.4;
+    padding: 2px 8px;
     border-radius: 0 8px 0 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
   }
 
   .postcard-content { flex: 1; }
@@ -118,6 +131,7 @@ permalink: /articles-blogs/
     }
 
     .postcard-content { width: 100%; }
+    .thumb-link { width: 100%; }
 
     .postcard img {
       width: 100%;
@@ -208,9 +222,8 @@ permalink: /articles-blogs/
       const thumb = (item.post_thumbnail && item.post_thumbnail.URL) || item.featured_image || firstImg;
       const imgSrc = thumb || siteIcon || 'https://via.placeholder.com/200x180?text=No+Image';
       const imgClass = thumb ? '' : 'thumb-icon';
-      const img = `<a href="${item.URL}" target="_blank"><img class="${imgClass}" src="${imgSrc}" alt="Thumbnail"></a>`;
-
       const badge = isFeatured ? `<span class="featured-badge">&#9733; Featured</span>` : '';
+      const img = `<a class="thumb-link" href="${item.URL}" target="_blank">${badge}<img class="${imgClass}" src="${imgSrc}" alt="Thumbnail"></a>`;
       const title = `<h4><a href="${item.URL}" target="_blank">${item.title}</a></h4>`;
       const divider = `<div class="divider"></div>`;
 
@@ -254,7 +267,7 @@ permalink: /articles-blogs/
 
       const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
 
-      postDiv.innerHTML = `<div class="postcard-content">${badge + title + divider + meta + summary + cats}</div>` + img;
+      postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
       container.appendChild(postDiv);
     });
   }
