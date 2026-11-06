@@ -26,6 +26,23 @@ permalink: /articles-blogs/
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
   }
 
+  /* Specially featured postcard */
+  .postcard.featured {
+    border: 2px solid #d4a017;
+    background: #FFF6DD;
+  }
+
+  .featured-badge {
+    display: inline-block;
+    background: #1e3a8a;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    padding: 2px 10px;
+    margin-bottom: 8px;
+    border-radius: 0 8px 0 8px;
+  }
+
   .postcard-content { flex: 1; }
 
   .postcard img {
@@ -126,14 +143,20 @@ permalink: /articles-blogs/
 
   const site = 'aacharyaaaditya.wordpress.com';
   const pageSize = 10;
+  const fieldsParam = 'fields=ID,title,URL,date,excerpt,content,categories,featured_image,post_thumbnail';
   const apiBase = 'https://public-api.wordpress.com/rest/v1.1/sites/' + site + '/posts/'
-    + '?fields=ID,title,URL,date,excerpt,content,categories,featured_image,post_thumbnail'
+    + '?' + fieldsParam
     + '&number=' + pageSize;
+
+  // The post pinned to the second position (the last part of its web address)
+  const featuredSlug = 'a-night-by-the-eiffel-tower';
+  const featuredPosition = 1; // 0 = first card, 1 = second card
+  let featuredPost = null;
 
   const categoryColorMap = {};
   let hueIndex = 0;
   let currentPage = 1;
-  let loadedCount = 0;
+  let fetchedCount = 0;
   let isLoading = false;
 
   // Icon shown on cards whose post has no image. Leave customIcon empty to use the blog's
@@ -146,6 +169,15 @@ permalink: /articles-blogs/
         .then(r => r.json())
         .then(data => { siteIcon = (data.icon && data.icon.img) || ''; })
         .catch(() => {});
+
+  // Look up the featured post once; if this fails, the page simply shows no featured card
+  const featuredReady = fetch('https://public-api.wordpress.com/rest/v1.1/sites/' + site
+      + '/posts/slug:' + encodeURIComponent(featuredSlug) + '?' + fieldsParam)
+    .then(r => r.json())
+    .then(data => { if (data && data.ID) featuredPost = data; })
+    .catch(() => {});
+
+  const ready = Promise.all([iconReady, featuredReady]);
 
   function getCategoryColor(name) {
     if (categoryColorMap[name]) return categoryColorMap[name];
@@ -165,8 +197,10 @@ permalink: /articles-blogs/
 
   function renderPosts(posts) {
     posts.forEach(item => {
+      const isFeatured = featuredPost && item.ID === featuredPost.ID;
+
       const postDiv = document.createElement('div');
-      postDiv.className = 'postcard';
+      postDiv.className = isFeatured ? 'postcard featured' : 'postcard';
 
       // Thumbnail: featured image first, then the first image inside the post, then the placeholder
       const firstImgMatch = (item.content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
@@ -176,6 +210,7 @@ permalink: /articles-blogs/
       const imgClass = thumb ? '' : 'thumb-icon';
       const img = `<a href="${item.URL}" target="_blank"><img class="${imgClass}" src="${imgSrc}" alt="Thumbnail"></a>`;
 
+      const badge = isFeatured ? `<span class="featured-badge">&#9733; Featured</span>` : '';
       const title = `<h4><a href="${item.URL}" target="_blank">${item.title}</a></h4>`;
       const divider = `<div class="divider"></div>`;
 
@@ -219,7 +254,7 @@ permalink: /articles-blogs/
 
       const cats = `<div class="categories-row">${categoryLabel}${categoryLinks}</div>`;
 
-      postDiv.innerHTML = `<div class="postcard-content">${title + divider + meta + summary + cats}</div>` + img;
+      postDiv.innerHTML = `<div class="postcard-content">${badge + title + divider + meta + summary + cats}</div>` + img;
       container.appendChild(postDiv);
     });
   }
@@ -230,30 +265,38 @@ permalink: /articles-blogs/
     loadMoreBtn.disabled = true;
     loadMoreBtn.textContent = 'Loading...';
 
-    iconReady
+    ready
       .then(() => fetch(apiBase + '&page=' + currentPage))
       .then(response => response.json())
       .then(data => {
         const posts = data.posts || [];
 
-        if (posts.length === 0 && loadedCount === 0) {
+        if (posts.length === 0 && fetchedCount === 0) {
           container.innerHTML = "<p>No posts found.</p>";
           loadMoreBtn.style.display = 'none';
           return;
         }
 
-        renderPosts(posts);
-        loadedCount += posts.length;
+        // Remove the featured post from its normal place so it does not appear twice
+        let list = featuredPost ? posts.filter(p => p.ID !== featuredPost.ID) : posts;
+
+        // On the first page, insert the featured post at its pinned position
+        if (currentPage === 1 && featuredPost) {
+          list = list.slice(0, featuredPosition).concat([featuredPost], list.slice(featuredPosition));
+        }
+
+        renderPosts(list);
+        fetchedCount += posts.length;
         currentPage++;
 
         // Hide the button once every post has been loaded
-        if (posts.length < pageSize || loadedCount >= data.found) {
+        if (posts.length < pageSize || fetchedCount >= data.found) {
           loadMoreBtn.style.display = 'none';
         }
       })
       .catch(err => {
         console.error(err);
-        if (loadedCount === 0) {
+        if (fetchedCount === 0) {
           container.innerHTML = `<p>Error loading posts.</p>`;
           loadMoreBtn.style.display = 'none';
         }
